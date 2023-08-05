@@ -1,9 +1,11 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:believers/utils/textstyle.dart';
+import 'package:believers/work.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
-import 'ui/spacecoffe.dart';
-import 'work.dart';
+import 'ui/pages/concat.dart';
+import 'ui/pages/spacecoffe.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -13,87 +15,110 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final List<GlobalKey> categorias = [GlobalKey(), GlobalKey(), GlobalKey()];
+  late ScrollController scrollCont;
+  BuildContext? tabContext;
+
+  @override
+  void initState() {
+    scrollCont = ScrollController();
+    scrollCont.addListener(changeTabs);
+    super.initState();
+  }
+
+  changeTabs() {
+    late RenderBox box;
+
+    for (var i = 0; i < categorias.length; i++) {
+      box = categorias[i].currentContext!.findRenderObject() as RenderBox;
+      Offset position = box.localToGlobal(Offset.zero);
+
+      if (scrollCont.offset >= position.dy) {
+        DefaultTabController.of(tabContext!).animateTo(
+          i,
+          duration: const Duration(milliseconds: 100),
+        );
+      }
+    }
+  }
+
+  scrollTo(int index) async {
+    scrollCont.removeListener(changeTabs);
+    final categoria = categorias[index].currentContext!;
+    await Scrollable.ensureVisible(
+      categoria,
+      duration: const Duration(milliseconds: 600),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    List<Widget> pages = [
+      const Work(),
+      const Spacecoffe(),
+      const Textfilds(),
+    ];
+    bool isScreenWide = MediaQuery.of(context).size.width >= 1200;
+
     return Scaffold(
-      backgroundColor: const Color(0xff192028),
-      appBar: AppBar(
-        elevation: 0,
-        //  foregroundColor: Color.fromARGB(0, 10, 5, 17),
-        backgroundColor: const Color(0xff192028),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            AnimatedTextKit(
-              animatedTexts: [
-                WavyAnimatedText('BELIEVERZ',
-                    textStyle: headTextStyel1(context)),
-              ],
-            ),
-            sizedBox(
-              context,
-              child: DefaultTextStyle(
-                style: headTextStyel1(context),
-                child: AnimatedTextKit(
-                  displayFullTextOnTap: true,
-                  animatedTexts: [
-                    TypewriterAnimatedText(
-                        'We believe that our Dreams and Ideas are worth shearing ',
-                        // 'we provide software services to help you bring your Ideas '
-                        // 'to life or Grow your business by having an online presence',
-                        speed: const Duration(milliseconds: 100)),
-                    // TypewriterAnimatedText(
-                    //     'we provide software services to help you bring your Ideas'),
-                    // TypewriterAnimatedText(
-                    //     'to life or Grow your business by having an online presence'),
-                    // TypewriterAnimatedText(
-                    //     'Do not test bugs out, design them out'),
+        backgroundColor: const Color(0xff0A1820),
+        body: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              backgroundColor: const Color(0xff0A1820),
+              toolbarHeight: isScreenWide ? 105 : 50,
+              flexibleSpace: Padding(
+                padding: const EdgeInsets.only(
+                  left: 20.0,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                        width: ResponsiveValue<double>(context,
+                            defaultValue: 200.0,
+                            conditionalValues: [
+                              const Condition.smallerThan(
+                                  name: DESKTOP, value: 50.0),
+                            ]).value,
+                        child: Image.asset("assets/believerz.png")),
+                    sizedBox(
+                      context,
+                      child: DefaultTextStyle(
+                        style: headTextStyel1(context),
+                        child: AnimatedTextKit(
+                          displayFullTextOnTap: true,
+                          animatedTexts: [
+                            TypewriterAnimatedText(
+                                ' our Dreams and Ideas are worth shearing ',
+                                speed: const Duration(milliseconds: 100)),
+                          ],
+                          onFinished: () {},
+                          onTap: () {
+                            //   print("Tap Event");
+                          },
+                        ),
+                      ),
+                    ),
                   ],
-                  onFinished: () {},
-                  onTap: () {
-                    //   print("Tap Event");
-                  },
                 ),
               ),
             ),
+            SliverList(
+              delegate: SliverChildListDelegate(<Widget>[
+                const Spacecoffe(),
+                const Textfilds(),
+                const SizedBox(
+                  height: 200,
+                )
+              ]),
+            )
           ],
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(0.0),
-            child: TextButton(
-                onPressed: () {},
-                child: Text("Home", style: headTextStyel1(context))),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(0.0),
-            child: TextButton(
-                onPressed: () {},
-                child: Text("About", style: headTextStyel1(context))),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(0.0),
-            child: TextButton(
-                onPressed: () {},
-                child: Text("Our Work", style: headTextStyel1(context))),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(0.0),
-            child: TextButton(
-                onPressed: () {},
-                child: Text("Careers", style: headTextStyel1(context))),
-          ),
-        ],
-      ),
-      body: ListView(children: const [
-        Spacecoffe(),
-        // spacePage(context),
-        // Spacecoffe(),
-        Work(),
+        )
+        // ListView(children: const [
 
-        //const HomePage(),
-      ]),
-    );
+        // ]),
+        );
   }
 }

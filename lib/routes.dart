@@ -1,3 +1,4 @@
+import 'package:believers/work.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -10,13 +11,13 @@ final GoRouter router = GoRouter(
       builder: (BuildContext context, GoRouterState state) {
         return const Home();
       },
-      routes: const <RouteBase>[
-        // GoRoute(
-        //   path: 'details',
-        //   builder: (BuildContext context, GoRouterState state) {
-        //     return const DetailsScreen();
-        //   },
-        // ),
+      routes: <RouteBase>[
+        GoRoute(
+          path: 'Work',
+          builder: (BuildContext context, GoRouterState state) {
+            return const Work();
+          },
+        ),
       ],
     ),
   ],

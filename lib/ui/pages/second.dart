@@ -97,41 +97,42 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    //bool isScreenWide = MediaQuery.of(context).size.width >= 1200;
     return SizedBox(
       width: size.width,
       height: size.height,
       child: Stack(
         children: [
           Positioned(
-            top: size.height * (animation2.value + .58),
+            top: size.height * (animation2.value + .30),
             left: size.width * .21,
             child: CustomPaint(
               painter: MyPainter(50),
             ),
           ),
           Positioned(
-            top: size.height * .98,
+            top: size.height * 1,
             left: size.width * .1,
             child: CustomPaint(
-              painter: MyPainter(animation4.value - 20),
+              painter: MyPainter(animation4.value - 10),
             ),
           ),
           Positioned(
-            top: size.height * .5,
-            left: size.width * (animation2.value + .9),
-            child: CustomPaint(
-              painter: MyPainter(30),
-            ),
-          ),
-          Positioned(
-            top: size.height * animation3.value,
-            left: size.width * (animation1.value + .6),
+            top: size.height * .7,
+            left: size.width * (animation2.value + .7),
             child: CustomPaint(
               painter: MyPainter(60),
             ),
           ),
+          // Positioned(
+          //   top: size.height * animation3.value,
+          //   left: size.width * (animation1.value + .6),
+          //   child: CustomPaint(
+          //     painter: MyPainter(60),
+          //   ),
+          // ),
           Positioned(
-            top: size.height * .2,
+            top: size.height * .3,
             left: size.width * .9,
             child: CustomPaint(
               painter: MyPainter(animation4.value - 20),

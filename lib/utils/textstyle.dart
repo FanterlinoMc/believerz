@@ -11,7 +11,7 @@ headTextStyel(BuildContext context) => TextStyle(
       letterSpacing: 1,
       wordSpacing: 4,
       fontSize: ResponsiveValue<double>(context,
-          defaultValue: 22,
+          defaultValue: 25,
           conditionalValues: [
             const Condition.smallerThan(name: DESKTOP, value: 10.0),
             // const Condition.smallerThan(name: DESKTOP, value: 15.0),
@@ -29,7 +29,25 @@ headTextStyel1(BuildContext context) => TextStyle(
       letterSpacing: 1,
       wordSpacing: 4,
       fontSize: ResponsiveValue<double>(context,
-          defaultValue: 22,
+          defaultValue: 23,
+          conditionalValues: [
+            const Condition.smallerThan(name: DESKTOP, value: 10.0),
+            // const Condition.smallerThan(name: DESKTOP, value: 15.0),
+            // const Condition.equals(name: MOBILE, value: 12),
+            // const Condition.between(start: 800, end: 1100, value: 17),
+//         // const Condition.between(start: 1000, end: 1200, value: 20),
+            // There are no conditions for width over 1200
+            // because the `maxWidth` is set to 1200 via the MaxWidthBox.
+          ]).value,
+    );
+standTextStyel(BuildContext context) => TextStyle(
+      color: Colors.red[800],
+      //  fontSize: 30,
+      fontWeight: FontWeight.bold,
+      letterSpacing: 1,
+      wordSpacing: 4,
+      fontSize: ResponsiveValue<double>(context,
+          defaultValue: 40,
           conditionalValues: [
             const Condition.smallerThan(name: DESKTOP, value: 10.0),
             // const Condition.smallerThan(name: DESKTOP, value: 15.0),
@@ -44,9 +62,10 @@ bodyTextStyel(BuildContext context) => TextStyle(
       color: Colors.white.withOpacity(.8),
       fontWeight: FontWeight.bold,
       letterSpacing: 1,
-      //wordSpacing: 1,
+      wordSpacing: 2,
+      textBaseline: TextBaseline.alphabetic,
       fontSize: ResponsiveValue<double>(context,
-          defaultValue: 17,
+          defaultValue: 18,
           conditionalValues: [
             // const Condition.equals(name: MOBILE, value: 10),
             const Condition.smallerThan(name: DESKTOP, value: 10.0),
@@ -58,9 +77,9 @@ bodyTextStyel(BuildContext context) => TextStyle(
           ]).value,
     );
 
-sizedBox(BuildContext context, {Widget? child}) => SizedBox(
+sizedBox(BuildContext context, {Widget? child, double? size}) => SizedBox(
       width: ResponsiveValue<double>(context,
-          defaultValue: 700.0,
+          defaultValue: size ?? 1000,
           conditionalValues: [
             // const Condition.equals(name: MOBILE, value: 160),
             const Condition.smallerThan(name: DESKTOP, value: 220.0),
@@ -78,7 +97,7 @@ sizedBoxImage(BuildContext context, {Widget? child}) => SizedBox(
           defaultValue: 400.0,
           conditionalValues: [
             // const Condition.equals(name: MOBILE, value: 160),
-            const Condition.smallerThan(name: DESKTOP, value: 210.0),
+            const Condition.smallerThan(name: DESKTOP, value: 200.0),
             // const Condition.smallerThan(name: DESKTOP, value: 300.0),
             // const Condition.between(start: 400, end: 1100, value: 300),
             // const Condition.between(start: 1200, end: 1500, value: 400),
@@ -104,7 +123,7 @@ spaceheading(
 ) =>
     SizedBox(
       height: ResponsiveValue(context, defaultValue: 100.0, conditionalValues: [
-        const Condition.smallerThan(name: DESKTOP, value: 50.0),
+        const Condition.smallerThan(name: DESKTOP, value: 20.0),
         // const Condition.smallerThan(name: DESKTOP, value: 30.0),
         // There are no conditions for width over 1200
         // because the `maxWidth` is set to 1200 via the MaxWidthBox.
@@ -115,7 +134,7 @@ spacePage(
   BuildContext context,
 ) =>
     SizedBox(
-      height: ResponsiveValue(context, defaultValue: 150.0, conditionalValues: [
+      height: ResponsiveValue(context, defaultValue: 280.0, conditionalValues: [
         const Condition.smallerThan(name: DESKTOP, value: 50.0),
         // const Condition.smallerThan(name: DESKTOP, value: 30.0),
         // There are no conditions for width over 1200
@@ -126,8 +145,8 @@ space(
   BuildContext context,
 ) =>
     SizedBox(
-      height: ResponsiveValue(context, defaultValue: 20.0, conditionalValues: [
-        const Condition.smallerThan(name: DESKTOP, value: 10.0),
+      height: ResponsiveValue(context, defaultValue: 50.0, conditionalValues: [
+        const Condition.smallerThan(name: DESKTOP, value: 15.0),
         // const Condition.smallerThan(name: DESKTOP, value: 20.0),
         // There are no conditions for width over 1200
         // because the `maxWidth` is set to 1200 via the MaxWidthBox.
